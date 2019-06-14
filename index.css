@@ -1,16 +1,19 @@
 * {
-    box-sizing: border-box;
-}
+    box-sizing: border-box;}
 
 body {
     font-family: 'Roboto', sans-serif;
 }
 
-.container {
-    /* display: flex; */
-    max-width: 600px;
-    margin: 0 auto;
+h1 {
+    text-align: center;
 }
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;   
+}
+
 .hidden{
     display: none;
 }
@@ -20,10 +23,13 @@ ul {
 }
 
 button, input[type="text"] {
-
     padding: 5px;
   
-  }  
+}
+
+input {
+    margin: 3px;
+}
   
 button:hover {
 
@@ -33,26 +39,44 @@ button:hover {
 
 .bookmark-element {
 
-    display: block;  
-    color: black;  
-    font-style: italic;  
-    font-size: 20px;  
+    display: block;     
+    background-color: lightblue;  
+    font-style: bold;    
+    border: solid 3px navy;
+    border-radius: 3px;  
     margin-bottom: 15px;
-  
+    text-align: center;  
   }
+
+  .bookmark-element-title {
+    color: navy; 
+    font-size: 30px;      
+
+  }
+  .button-label {    
+    font-size: 20px;
+    padding: 10px;       
+  }
+
+  .bookmark-buttons {
+      margin: 10px;
+  }
+
+
   section {
       position: relative;
       margin-top: 50px;
   }
 
-  .create-bookmark {
+  /* .create-bookmark {
+      /* display: flex;
+      flex-direction: row;
+      justify-content: space-evenly; 
       
-  }
+  } 
 
-  .minRating-container {
-      display: inline-block;
-      
+*/
 
-  }
+ 
 
 

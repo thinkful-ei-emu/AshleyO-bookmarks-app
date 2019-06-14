@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
+    <script src="https://kit.fontawesome.com/a894d55837.js"></script>
 </head>
 <body>
     <div class="container">
@@ -19,9 +20,9 @@
                 <div>
                     <span>
                         <label for="title">Title: </label>           
-                        <input type="text" id= "title" name= "title" placeholder="Article Title" >                             
+                        <input type="text" id= "title" name= "title" placeholder="Article Title" required >                             
                         <label for="ratingScale">Rating: </label>
-                            <select name="ratingScale" id="ratingScale" >                                        
+                            <select name="ratingScale" id="ratingScale">                                        
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -32,11 +33,11 @@
                 </div>            
                 <div>
                     <label for= "url">Site Link: </label>                            
-                    <input type="text" id="url" name="url" placeholder="http://..." >                 
+                    <input type="text" id="url" name="url" placeholder="http://..." required>                 
                 </div>            
                 <div>
                     <label for="description">Description: </label><br>                             
-                    <textarea type="text" id="description" name="description" placeholder="This article is about..." rows="4" cols="50"></textarea>            
+                    <textarea type="text" id="description" name="description" placeholder="This article is about..." required rows="4" cols="50" ></textarea>            
                 </div>                    
                 </div>  
                     <div>
@@ -56,7 +57,7 @@
                 
                 <section>
                     <ul class="bookmarks-list js-bookmarks-list">
-                        <li class="bookmark-element">Cat Article</li>                 
+                                     
                     </ul>    
 
                 </section>

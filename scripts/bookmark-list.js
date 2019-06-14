@@ -12,21 +12,38 @@ const bookmarkList = (function(){
 
 // user can see a list of my bookmarks when I first open the app
 
+function generateStars(bookmark){
+    let stars = '';
+    for (let i=1; i <= bookmark.rating; i++){
+        stars += `<i class="fas fa-star"></i>`        
+    }
+    return stars;
+}
+
+
 function generateBookmarkElement(bookmark){
     console.log('generateBookmarkElement ran');
-    console.log(`bookmark in generateElement: ${bookmark}`);
-    console.log(`bookmarkTitle in generateElement: ${bookmark.title}`);
-    const bookmarkTitle =`<span class="bookmark-element-title">${bookmark.title}</span>`
+    
+    const bookmarkTitle =`<span class="bookmark-element-title">${bookmark.title}</span>`    
+    const bookmarkRating = generateStars(bookmark);
+    
     // const expandedClass = item.expanded ? 'bookmark-expanded' : '';
     return `
-    <li class="bookmark-element">
-    ${bookmarkTitle}<br>
-    <button>
-    <span>Expand</span>
-    </button>
-    <button>
-    <span>Remove</span>
-    </button>
+    <li class="bookmark-element" data-bookmark-id="${bookmark.id}">    
+        ${bookmarkTitle}
+    <br> 
+    <div class="star-rating">   
+        <span>${bookmarkRating}</span>
+    </div>
+    <br>
+    <div class= "bookmark-buttons">
+        <button class="js-expand-button"> 
+            <span class="button-label">Expand</span>
+        </button>
+        <button class="js-bookmark-delete"> 
+            <span class="button-label">Remove</span>
+        </button>
+    </div>
     </li>`;
 }
 
@@ -60,15 +77,36 @@ function handleNewBookmarkSubmit() {
         console.log('handleNewBookmarkSubmit ran');          
         let formElement = $('#js-bookmarks-form')[0];      
         let jsonElement = serializeJson(formElement);
-        console.log(jsonElement); 
-        const bookmarkElement = {
-            title: $(`#title`).val(),
+        // console.log(jsonElement); 
+        const bookmark = {
+            id: cuid(), 
+            title: $(`#title`).val(),           
             rating: $(`#ratingScale`).val(),
             url: $(`#url`).val(),
-            description: $(`description`).val(),
-         };        
+            description: $(`#description`).val(),
+         }; 
+         console.log(bookmark);       
         formElement.reset();   
-        store.addBookmark(bookmarkElement);
+        store.addBookmark(bookmark);
+        render();
+    });
+}
+
+//get id of current bookmark
+function getCurrentBookmarkId(currentBookmark) {    
+    return $(currentBookmark)
+    .closest('.bookmark-element')
+    .data('bookmark-id');
+   
+    
+        
+
+}
+//event listener placed on remove button to remove bookmark when clicked
+function handleDeleteBookmark() {
+    $('.js-bookmarks-list').on('click','.js-bookmark-delete', event =>{        
+        const id = getCurrentBookmarkId(event.currentTarget);
+        store.findAndDelete(id);
         render();
     });
 }
@@ -94,6 +132,7 @@ function handleNewBookmarkSubmit() {
 
 function bindEventListeners() {
     handleNewBookmarkSubmit();
+    handleDeleteBookmark();
 }
 
 

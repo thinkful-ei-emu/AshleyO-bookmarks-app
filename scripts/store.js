@@ -18,8 +18,23 @@ const store = (function(){
     }
 
     //function that finds bookmark id
+    const findById = function(id) {
+        return this.bookmarks.find(bookmark => bookmark.id === id);
+    }
+
+    
 
     //function that deletes bookmarks
+
+    const findAndDelete = function(id) {
+         this.bookmarks = this.bookmarks.filter(bookmark => bookmark.id !== id);
+         console.log(this.bookmarks);
+    }
+    
+    //function that toggles add bookmark button
+    const toggleAddBookmark = function() {
+
+    }
 
     //function that updates data
 
@@ -35,7 +50,9 @@ const store = (function(){
         filteredRating: null,
         //adding: false,
 
-        addBookmark
+        addBookmark,
+        findById,
+        findAndDelete
     };
 
 
