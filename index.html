@@ -7,9 +7,7 @@
 
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Bookmarks App</title>
-
-    <link rel="shortcut icon" href="#">
+    <title>Bookmarks App</title>   
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
 
@@ -24,23 +22,34 @@
 
                 <h1>My Bookmarks</h1>
             
-                <form id="bookmarks-form" name="bookmarks-form">
-                    
+                <form id="js-bookmarks-form" name="js-bookmarks-form">
+
                      <div class="create-bookmark"> <!--use .hidden class to hide by default -->
                         <legend>Create Bookmark:</legend>
 
                         <div>
+                            <span>
                             <label for="title">Title: </label> 
             
-                            <input type="text" id= "title" name= "title" placeholder="Article Title" required>                                         
-            
+                            <input type="text" id= "title" name= "title" placeholder="Article Title" >                                         
+                            
+                            <label for="ratingScale">Rating: </label>
+                                    <select name="ratingScale" id="ratingScale" >                                        
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                            </span>
+                       
                         </div>
             
                         <div>
 
                             <label for= "url">Site Link: </label>
                             
-                            <input type="text" id="url" name="url" placeholder="http://..." required>                                         
+                            <input type="text" id="url" name="url" placeholder="http://..." >                                         
                 
                         </div>
             
@@ -48,51 +57,37 @@
 
                             <label for="description">Description: </label><br>                            
                             
-                            <textarea type="text" id="description" name="description" placeholder="This article is about..." rows="4" cols="50" required></textarea>                                         
+                            <textarea type="text" id="description" name="description" placeholder="This article is about..." rows="4" cols="50"></textarea>                                         
                 
                         </div>     
                                           
-                        <div>                           
-                            <fieldset>
-                                    <label for="ratingScale">Rating: </label>
-                                    <select name="selectRating" id="selectRating" required>                                        
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </select>
-                            </fieldset>    
-                        </div>                     
                     
                     </div>                    
 
-                    <div class= "display-inline">
-                      <button type="submit">Add Bookmark</button>                     
-                           
-                            <fieldset >
-                                <label for="ratingScale">Minimum Rating: </label>
-                                <select name="selectMin" id="selectMin" required>                                    
+                    <div>
+                       <button type="submit">Add Bookmark</button>            
+                       
+                    </div>             
+                </form>
+
+                <label for="ratingMin">Minimum Rating:</label>
+                                <select name="ratingtMin" id="ratingMin">                                    
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
                                     <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </fieldset>    
-
-                            
-                       
-                        
-                        
-
-                    </div>    
-                  
-            
-                </form>
+                                    <option value="5">5</option>          
                 
                 <section>
-                    <ul class="bookmarks-list">
+                    <ul class="bookmarks-list js-bookmarks-list">
+                        <!-- <li>Cat Article
+                            <button>
+                                <span>
+
+                                </span>
+                            </button>
+                        </li> -->
+
                 
                     </ul>
 
