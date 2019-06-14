@@ -7,23 +7,15 @@ body {
 }
 
 .container {
-
+    /* display: flex; */
     max-width: 600px;
     margin: 0 auto;
-
 }
-
-fieldset {
-    padding: 0;
-    border: none;
-    margin: 0;
-}
-
 .hidden{
     display: none;
 }
 
-ol, ul {
+ul {
     list-style: none;
 }
 
@@ -39,6 +31,28 @@ button:hover {
 
 }
 
-.display-inline  {
-    display: inline-block;
-}
+.bookmark-element {
+
+    display: block;  
+    color: black;  
+    font-style: italic;  
+    font-size: 20px;  
+    margin-bottom: 15px;
+  
+  }
+  section {
+      position: relative;
+      margin-top: 50px;
+  }
+
+  .create-bookmark {
+      
+  }
+
+  .minRating-container {
+      display: inline-block;
+      
+
+  }
+
+

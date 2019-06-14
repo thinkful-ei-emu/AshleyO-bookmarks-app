@@ -33,6 +33,7 @@ const store = (function(){
         bookmarks: [],
         error: null,
         filteredRating: null,
+        //adding: false,
 
         addBookmark
     };

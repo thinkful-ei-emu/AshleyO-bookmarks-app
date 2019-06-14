@@ -16,10 +16,11 @@ function generateBookmarkElement(bookmark){
     console.log('generateBookmarkElement ran');
     console.log(`bookmark in generateElement: ${bookmark}`);
     console.log(`bookmarkTitle in generateElement: ${bookmark.title}`);
+    const bookmarkTitle =`<span class="bookmark-element-title">${bookmark.title}</span>`
     // const expandedClass = item.expanded ? 'bookmark-expanded' : '';
     return `
     <li class="bookmark-element">
-    ${bookmark.title}
+    ${bookmarkTitle}<br>
     <button>
     <span>Expand</span>
     </button>
@@ -33,40 +34,42 @@ function generateBookmarksString(bookmarkList){
     console.log('generateBookmarkstring ran')
     const bookmarks = bookmarkList.map((bookmark) => generateBookmarkElement(bookmark));
     console.log(`result after mapping: ${bookmarks}`)
-    return bookmarks.join('join');
+    return bookmarks.join('');
 }
 
 function render() {
-    let bookmarks = [...store.bookmarks]
-    console.log(`bookmarks in render: ${[...store.bookmarks]}`);
+    let bookmarks = [...store.bookmarks]    
     console.log('render ran')
-    const bookmarkListString = generateBookmarksString(bookmarks);   
-
+    const bookmarkListString = generateBookmarksString(bookmarks); 
     $('.js-bookmarks-list').html(bookmarkListString);
     
 }
 
 function serializeJson(form) {    
     const formData = new FormData(form);
-    const o = {};
-    formData.forEach((val, name) => o[name] = val);
+    const object = {};
+    formData.forEach((val, name) => object[name] = val);
     console.log(formData);
-    return JSON.stringify(o);
+    return JSON.stringify(object);
+    //need to send to post request
 }
 
-function handleNewBookmarkSubmit() {
-    
+function handleNewBookmarkSubmit() {    
     $('#js-bookmarks-form').submit(function (event){        
-      event.preventDefault();
-      console.log('handleNewBookmarkSubmit ran');
-      const form = event.currentTarget;      
-      const bookmark = serializeJson(form);    
-      
-      store.addBookmark(bookmark);
-      render();
-    
-
-
+        event.preventDefault();
+        console.log('handleNewBookmarkSubmit ran');          
+        let formElement = $('#js-bookmarks-form')[0];      
+        let jsonElement = serializeJson(formElement);
+        console.log(jsonElement); 
+        const bookmarkElement = {
+            title: $(`#title`).val(),
+            rating: $(`#ratingScale`).val(),
+            url: $(`#url`).val(),
+            description: $(`description`).val(),
+         };        
+        formElement.reset();   
+        store.addBookmark(bookmarkElement);
+        render();
     });
 }
 
