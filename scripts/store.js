@@ -18,7 +18,7 @@ const store = (function(){
     }
 
     //function that finds bookmark id
-    const findById = function(id) {
+    const findById = function(id) {       
         return this.bookmarks.find(bookmark => bookmark.id === id);
     }
 
@@ -37,6 +37,14 @@ const store = (function(){
         this.adding = !this.adding;        
 
     }
+    const toggleExpandStatus = function(bookmark) {
+        
+        this.bookmark.expand = !this.bookmark.expand;
+    }
+    
+    // const toggleExpandBookmark = function() {
+    //     this.expandCompleted = !this.expandCompleted
+    // }
 
    
 
@@ -54,9 +62,13 @@ const store = (function(){
         filteredRating: null,
         adding: false,
         
+        
+        
         toggleAddBookmark,
         addBookmark,
+        // toggleExpandBookmark,
         findById,
+        toggleExpandStatus,
         findAndDelete
     };
 
