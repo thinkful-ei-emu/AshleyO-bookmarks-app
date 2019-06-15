@@ -37,14 +37,12 @@ const store = (function(){
         this.adding = !this.adding;        
 
     }
-    const toggleExpandStatus = function(bookmark) {
-        
-        this.bookmark.expand = !this.bookmark.expand;
+
+    const setfilterRating = function (filterRatingVal) {
+        this.filterRating = filterRatingVal;
     }
+  
     
-    // const toggleExpandBookmark = function() {
-    //     this.expandCompleted = !this.expandCompleted
-    // }
 
    
 
@@ -59,17 +57,16 @@ const store = (function(){
     return {
         bookmarks: [],
         error: null,
-        filteredRating: null,
+        filterRating: null,
         adding: false,
         
         
         
         toggleAddBookmark,
-        addBookmark,
-        // toggleExpandBookmark,
-        findById,
-        toggleExpandStatus,
-        findAndDelete
+        addBookmark,        
+        findById,        
+        findAndDelete,
+        setfilterRating,
     };
 
 

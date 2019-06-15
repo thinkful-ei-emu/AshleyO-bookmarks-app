@@ -4,17 +4,9 @@
 
 const bookmarkList = (function(){
 
-// user can add bookmarks to user's bookmark list. Bookmarks contain:
-//title,url link description, rating (1-5)
-
-
-
-
-// user can see a list of my bookmarks when I first open the app
-
-
 
 function generateStars(bookmark){
+    console.log(bookmark.rating);
     let stars = '';
     for (let i=1; i <= bookmark.rating; i++){
         stars += `<i class="fas fa-star"></i>`        
@@ -22,14 +14,11 @@ function generateStars(bookmark){
     return stars;
 }
 
-
-
-
 function generateBookmarkElement(bookmark){
     console.log('generateBookmarkElement ran');    
      
     const bookmarkRating = generateStars(bookmark);
-
+    
     return `
     <li class="bookmark-element" data-bookmark-id="${bookmark.id}">    
     <span class="bookmark-element-title">${bookmark.title}</span>    
@@ -55,15 +44,18 @@ function generateBookmarkElement(bookmark){
 
 function generateBookmarksString(bookmarkList){
     console.log('generateBookmarkstring ran')
-    const bookmarks = bookmarkList.map((bookmark) => generateBookmarkElement(bookmark));
-    console.log(`result after mapping: ${bookmarks}`)
+    const bookmarks = bookmarkList.map((bookmark) => generateBookmarkElement(bookmark));    
     return bookmarks.join('');
 }
 
 function render() {
     let bookmarks = [...store.bookmarks]    
-    console.log('render ran');  
-     
+    console.log('render ran');      
+     if(store.filterRating != null){        
+         bookmarks = bookmarks.filter(bookmark => bookmark.rating >= store.filterRating);
+         console.log(`NEW BOOKMARKS ARRAY: ${bookmarks}`); 
+
+     };
 
     const bookmarkListString = generateBookmarksString(bookmarks); 
     $('.js-bookmarks-list').html(bookmarkListString);
@@ -79,8 +71,7 @@ function serializeJson(form) {
     //need to send to post request
 }
 
-function handleNewBookmarkSubmit() {
-    console.log('HANDLESUBMIT');    
+function handleNewBookmarkSubmit() {      
     $('#js-bookmarks-form').submit(event => {          
         event.preventDefault();
         console.log('handleNewBookmarkSubmit ran');          
@@ -101,11 +92,15 @@ function handleNewBookmarkSubmit() {
             store.toggleAddBookmark();            
             store.addBookmark(bookmark);                                
             $('.create-bookmark').addClass('hidden');
+            $('.minRating-container').removeClass('hidden');  
+            
             render();
         }
         else {     
             store.toggleAddBookmark();
-            $('.create-bookmark').removeClass('hidden');     
+            $('.create-bookmark').removeClass('hidden');
+            $('.minRating-container').addClass('hidden');
+               
         }
         
         
@@ -149,10 +144,7 @@ const toggleExpandStatus = function(bookmark) {
 //user can click on addbookmark button to input bookmark info and add bookmark to list
 function handleExpandButton (){ 
     $('.js-bookmarks-list').on('click','.js-bookmark-expand', event =>{        
-                
-        // // console.log(expandBookmark);
-        // expandBookmark = !expandBookmark;
-        // //render();       
+                   
         const id = getCurrentBookmarkId(event.currentTarget);
         const bookmark = store.findById(id);  
         console.log(bookmark);
@@ -160,50 +152,36 @@ function handleExpandButton (){
            
         if(expandStatus) {
             $('.show-url').removeClass('hidden');            
-                console.log("removeclass",expandStatus);
-                // toggleExpandStatus();
-                      
+            console.log("removeclass",expandStatus);                
         }
         else {
             $('.show-url').addClass('hidden');
-            console.log("addlclass",expandStatus); 
-            // toggleExpandStatus();
-            
-            
+            console.log("addlclass",expandStatus);                
         }
-        //  **NEED TO TOGGLE ADD AND REMOVE CLASS
+       
         
     });
-
     
-    
+}
+//selected mim rating
+function handleMinRatingFilter() {
+    $('.container').on('change','#ratingMin', event =>{       
+           event.preventDefault();
+           let filterRatingVal = $(event.currentTarget).val();
+           console.log(filterRatingVal);    
+           store.setfilterRating(filterRatingVal);                  
+           render();       
+    });
 }
 
 
 
 
-
-
-// All bookmarks in the list default to a "condensed" view showing only title and rating
-
-// user can click on a bookmark to display the "detailed" view
-
-// Detailed view expands to additionally display description and a "Visit Site" link
-
-
-
-// user receive appropriate feedback when I cannot submit a bookmark
-
-// Check all validations in the API documentation (e.g. title and url field required)
-
-// user can select from a dropdown a "minimum rating" to filter the list by all bookmarks rated at or above the chosen selection
-
-// (Extension) I can edit the rating and description of a bookmark in my list
-
 function bindEventListeners() {    
-    handleNewBookmarkSubmit();
+    handleNewBookmarkSubmit();    
     handleExpandButton();    
     handleDeleteBookmark();
+    handleMinRatingFilter();
 }
 
 
