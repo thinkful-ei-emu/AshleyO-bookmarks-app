@@ -12,6 +12,8 @@ const bookmarkList = (function(){
 
 // user can see a list of my bookmarks when I first open the app
 
+
+
 function generateStars(bookmark){
     let stars = '';
     for (let i=1; i <= bookmark.rating; i++){
@@ -22,23 +24,33 @@ function generateStars(bookmark){
 
 
 
+
 function generateBookmarkElement(bookmark){
     console.log('generateBookmarkElement ran');
     
-    const bookmarkTitle =`<span class="bookmark-element-title">${bookmark.title}</span>`    
+     
     const bookmarkRating = generateStars(bookmark);
     
-    // const expandedClass = item.expanded ? 'bookmark-expanded' : '';
+    
+    
+
+
+
+
     return `
-    <li class="bookmark-element" data-bookmark-id="${bookmark.id}">    
-        ${bookmarkTitle}
-    <br> 
+    <li class="bookmark-element" data-bookmark-status="${bookmark.url}" data-bookmark-id="${bookmark.id}">    
+    <span class="bookmark-element-title">${bookmark.title}</span>  
+    
+    <div class="show-url hidden">
+       <span> ${bookmark.url}</span>
+    </div>
+    
     <div class="star-rating">   
         <span>${bookmarkRating}</span>
     </div>
-    <br>
+    
     <div class= "bookmark-buttons">
-        <button class="js-expand-button"> 
+        <button class="js-bookmark-expand"> 
             <span class="button-label">Expand</span>
         </button>
         <button class="js-bookmark-delete"> 
@@ -73,13 +85,14 @@ function serializeJson(form) {
     //need to send to post request
 }
 
-function handleNewBookmarkSubmit() {    
+function handleNewBookmarkSubmit() {
+    console.log('HANDLESUBMIT');    
     $('#js-bookmarks-form').submit(event => {          
         event.preventDefault();
         console.log('handleNewBookmarkSubmit ran');          
         let formElement = $('#js-bookmarks-form')[0];      
         let jsonElement = serializeJson(formElement);
-        // console.log(jsonElement); 
+        // console.log(jsonElement);
         const bookmark = {
             id: cuid(), 
             title: $(`#title`).val(),           
@@ -87,11 +100,26 @@ function handleNewBookmarkSubmit() {
             url: $(`#url`).val(),
             description: $(`#description`).val(),
          };                
-        formElement.reset();   
-        store.addBookmark(bookmark);
-        render();
+        formElement.reset();
+          
+        if(event.currentTarget && store.adding){                                     
+            store.toggleAddBookmark();            
+            store.addBookmark(bookmark); 
+                                 
+            $('.create-bookmark').addClass('hidden');
+            render();
+
+        }
+        else {     
+            store.toggleAddBookmark();
+            $('.create-bookmark').removeClass('hidden');     
+        }
+        
+        
     });
 }
+
+
 
 //get id of current bookmark
 function getCurrentBookmarkId(currentBookmark) {    
@@ -111,28 +139,34 @@ function handleDeleteBookmark() {
     });
 }
 
+function getExpandStatus(currentBookmark) {
+    return $(currentBookmark)
+    .closest('.bookmark-element')
+    .data('bookmark-status');
+}
+
+
 //user can click on addbookmark button to input bookmark info and add bookmark to list
-function handleAddBookmarkButton (){ 
-    $('#js-bookmarks-form').on('click','#addBookmark-button', event =>{ 
-        event.preventDefault();
-        console.log('handleAddBookmarkButton ran')      
-        if(event.currentTarget && store.adding){
-            handleNewBookmarkSubmit(); 
-            console.log(store.adding);                         
-            store.toggleAddBookmark();                        
-            $('.create-bookmark').addClass('hidden');
+function handleExpandButton (){ 
+    $('.js-bookmarks-list').on('click','.js-bookmark-expand', event =>{        
+        
+        let expandBookmark = getExpandStatus(event.currentTarget);
+        
+        
+        if(expandBookmark){
+            $('.show-url').removeClass('hidden');
+        }
+        else{
+            $('.show-url').addClass('hidden');
+        }
+
+        
 
 
-        }
-        else {           
-            console.log(store.adding); 
-            store.toggleAddBookmark();
-            $('.create-bookmark').removeClass('hidden');
-                             
-        }
-        // render();
+        //  **NEED TO TOGGLE ADD AND REMOVE CLASS
         
     });
+    
 }
 
 
@@ -157,8 +191,9 @@ function handleAddBookmarkButton (){
 // (Extension) I can edit the rating and description of a bookmark in my list
 
 function bindEventListeners() {
-    handleAddBookmarkButton();
-    // handleNewBookmarkSubmit();    
+    // handleAddBookmarkButton();
+    handleNewBookmarkSubmit();
+    handleExpandButton();    
     handleDeleteBookmark();
 }
 
