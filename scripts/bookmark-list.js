@@ -21,6 +21,7 @@ function generateStars(bookmark){
 }
 
 
+
 function generateBookmarkElement(bookmark){
     console.log('generateBookmarkElement ran');
     
@@ -56,7 +57,8 @@ function generateBookmarksString(bookmarkList){
 
 function render() {
     let bookmarks = [...store.bookmarks]    
-    console.log('render ran')
+    console.log('render ran');    
+
     const bookmarkListString = generateBookmarksString(bookmarks); 
     $('.js-bookmarks-list').html(bookmarkListString);
     
@@ -72,7 +74,7 @@ function serializeJson(form) {
 }
 
 function handleNewBookmarkSubmit() {    
-    $('#js-bookmarks-form').submit(function (event){        
+    $('#js-bookmarks-form').submit(event => {          
         event.preventDefault();
         console.log('handleNewBookmarkSubmit ran');          
         let formElement = $('#js-bookmarks-form')[0];      
@@ -84,8 +86,7 @@ function handleNewBookmarkSubmit() {
             rating: $(`#ratingScale`).val(),
             url: $(`#url`).val(),
             description: $(`#description`).val(),
-         }; 
-         console.log(bookmark);       
+         };                
         formElement.reset();   
         store.addBookmark(bookmark);
         render();
@@ -96,8 +97,7 @@ function handleNewBookmarkSubmit() {
 function getCurrentBookmarkId(currentBookmark) {    
     return $(currentBookmark)
     .closest('.bookmark-element')
-    .data('bookmark-id');
-   
+    .data('bookmark-id'); 
     
         
 
@@ -111,6 +111,32 @@ function handleDeleteBookmark() {
     });
 }
 
+//user can click on addbookmark button to input bookmark info and add bookmark to list
+function handleAddBookmarkButton (){ 
+    $('#js-bookmarks-form').on('click','#addBookmark-button', event =>{ 
+        event.preventDefault();
+        console.log('handleAddBookmarkButton ran')      
+        if(event.currentTarget && store.adding){
+            handleNewBookmarkSubmit(); 
+            console.log(store.adding);                         
+            store.toggleAddBookmark();                        
+            $('.create-bookmark').addClass('hidden');
+
+
+        }
+        else {           
+            console.log(store.adding); 
+            store.toggleAddBookmark();
+            $('.create-bookmark').removeClass('hidden');
+                             
+        }
+        // render();
+        
+    });
+}
+
+
+
 
 
 
@@ -120,7 +146,7 @@ function handleDeleteBookmark() {
 
 // Detailed view expands to additionally display description and a "Visit Site" link
 
-// user can remove bookmarks from my bookmark list
+
 
 // user receive appropriate feedback when I cannot submit a bookmark
 
@@ -131,7 +157,8 @@ function handleDeleteBookmark() {
 // (Extension) I can edit the rating and description of a bookmark in my list
 
 function bindEventListeners() {
-    handleNewBookmarkSubmit();
+    handleAddBookmarkButton();
+    // handleNewBookmarkSubmit();    
     handleDeleteBookmark();
 }
 

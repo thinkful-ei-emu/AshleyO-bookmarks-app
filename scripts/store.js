@@ -34,6 +34,8 @@ const store = (function(){
     //function that toggles add bookmark button
     const toggleAddBookmark = function() {
 
+        this.adding = !this.adding;        
+
     }
 
     //function that updates data
@@ -48,8 +50,9 @@ const store = (function(){
         bookmarks: [],
         error: null,
         filteredRating: null,
-        //adding: false,
-
+        adding: false,
+        
+        toggleAddBookmark,
         addBookmark,
         findById,
         findAndDelete
