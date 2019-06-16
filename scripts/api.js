@@ -18,7 +18,7 @@ const api = (function(){
                 }
                 
             }
-            return Promise.reject(error);
+            return res.json();
         })
         .then(data => {
             if (error) {

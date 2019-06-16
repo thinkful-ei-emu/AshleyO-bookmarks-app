@@ -41,6 +41,11 @@ const store = (function(){
     const setfilterRating = function (filterRatingVal) {
         this.filterRating = filterRatingVal;
     }
+
+    const findAndUpdate = function(id) {
+        this.bookmarks=this.findById(id);
+        Object.assign(item, newData);
+    }
   
     
 
@@ -65,7 +70,8 @@ const store = (function(){
         toggleAddBookmark,
         addBookmark,
         setError,        
-        findById,        
+        findById,
+        findAndUpdate,         
         findAndDelete,
         setfilterRating,
     };
