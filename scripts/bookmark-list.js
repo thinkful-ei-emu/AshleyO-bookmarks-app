@@ -14,15 +14,13 @@ const bookmarkList = (function(){
         
     function renderError() {
         if(store.error) {
-            const errorDisplay = generateError(store.error);
-            $('.error-container').html(errorDisplay);
+            const el = generateError(store.error);
+            $('.error-container').html(el);
         }
             else {
                 $('.error-container').empty();
             }
-        }
-
-    
+        }   
 
 
     function generateStars(bookmark){
@@ -84,64 +82,70 @@ const bookmarkList = (function(){
         
     }
 
-    // function serializeJson(form) {    
-    //     const formData = new FormData(form);
-    //     const object = {};
-    //     formData.forEach((val, name) => object[name] = val);
-    //     console.log(formData);
-    //     return JSON.stringify(object);
-    //     //need to send to post request
-    // }
+    //need to send to post request
+
+    function serializeJson(form) {    
+        const formData = new FormData(form);
+        const object = {};
+        formData.forEach((val, name) => object[name] = val);
+        console.log(formData);
+        return JSON.stringify(object);
+        
+    }
 
     function handleNewBookmarkSubmit() {      
         $('#js-bookmarks-form').submit(event => {          
             event.preventDefault();
             console.log('handleNewBookmarkSubmit ran');          
-            let bookmarkForm = $('#js-bookmarks-form')[0];      
-            // let newBookmark = serializeJson(bookmark);
+            let formElement = $('#js-bookmarks-form')[0];      
+            let bookmarkForm = serializeJson(formElement);
+             formElement.reset();
+            // const newBookmark = {
+            //     id: cuid(), 
+            //     title: $(`#title`).val(),           
+            //     rating: $(`#ratingScale`).val(),
+            //     url: $(`#url`).val(),
+            //     description: $(`#description`).val(),
+            //     expand: false,                
+            // };
+            console.log(bookmarkForm);
+            api.createBookmark(bookmarkForm)
+            .then((newbookmark) => {                                                        
+                              
+                    store.addBookmark(newbookmark); 
+                    render();
+                
+            })
+            .catch((err) => {
+                store.setError(err.message);
+                renderError();
+              });
+             
             
-            const newBookmark = {
-                id: cuid(), 
-                title: $(`#title`).val(),           
-                rating: $(`#ratingScale`).val(),
-                url: $(`#url`).val(),
-                description: $(`#description`).val(),
-                expand: false,                
-            };
-            console.log(newBookmark);  
-            bookmarkForm.reset();
-            if(event.currentTarget && store.adding){
-                api.createBookmark(newBookmark)
-                .then((bookmark) => {                                                        
-                        store.toggleAddBookmark();            
-                        store.addBookmark(bookmark);                                
-                        $('.create-bookmark').addClass('hidden');
-                        $('.minRating-container').removeClass('hidden');                        
-                        render();
+            // if(event.currentTarget && store.adding){
+            //     api.createBookmark(newBookmark)
+            //     .then((bookmark) => {                                                        
+            //             store.toggleAddBookmark();            
+            //             store.addBookmark(bookmark);                                
+            //             $('.create-bookmark').addClass('hidden');
+            //             $('.minRating-container').removeClass('hidden');                        
+            //             render();
                     
-                })
-                .catch((err) => {
-                    store.setError(err.message);
-                    renderError();
-                  })
-                ;
+            //     })
+            //     .catch((err) => {
+            //         store.setError(err.message);
+            //         renderError();
+            //       })
+            //     ;
 
-            }
-            else {     
-                store.toggleAddBookmark();
-                $('.create-bookmark').removeClass('hidden');
-                $('.minRating-container').addClass('hidden');   
-            }
-
-            
+            // }
+            // else {     
+            //     store.toggleAddBookmark();
+            //     $('.create-bookmark').removeClass('hidden');
+            //     $('.minRating-container').addClass('hidden');   
+            // }
 
             
-
-
-            
-           
-            
-           
             
         });
     }
@@ -166,42 +170,42 @@ const bookmarkList = (function(){
         });
     }
 
-    const toggleExpandStatus = function(bookmark) {
+    // const toggleExpandStatus = function(bookmark) {
         
-        if(bookmark.expand){
-            bookmark.expand = false;
-            console.log(`toggleStatus: IF: ${bookmark.expand}`);
-        }
-        else {
-            bookmark.expand = true;
-            console.log(`toggleStatus ELSE: ${bookmark.expand}`)
-        }
+    //     if(bookmark.expand){
+    //         bookmark.expand = false;
+    //         console.log(`toggleStatus: IF: ${bookmark.expand}`);
+    //     }
+    //     else {
+    //         bookmark.expand = true;
+    //         console.log(`toggleStatus ELSE: ${bookmark.expand}`)
+    //     }
 
-        return bookmark.expand;
+    //     return bookmark.expand;
         
-    }
+    // }
     //user can click on addbookmark button to input bookmark info and add bookmark to list
-    function handleExpandButton (){ 
-        $('.js-bookmarks-list').on('click','.js-bookmark-expand', event =>{        
+    // function handleExpandButton (){ 
+    //     $('.js-bookmarks-list').on('click','.js-bookmark-expand', event =>{        
                     
-            const id = getCurrentBookmarkId(event.currentTarget);
-            const bookmark = store.findById(id);  
-            console.log(bookmark);
-            const expandStatus = toggleExpandStatus(bookmark);        
+    //         const id = getCurrentBookmarkId(event.currentTarget);
+    //         const bookmark = store.findById(id);  
+    //         console.log(bookmark);
+    //         const expandStatus = toggleExpandStatus(bookmark);        
             
-            if(expandStatus) {
-                $('.show-url').removeClass('hidden');            
-                console.log("removeclass",expandStatus);                
-            }
-            else {
-                $('.show-url').addClass('hidden');
-                console.log("addlclass",expandStatus);                
-            }
+    //         if(expandStatus) {
+    //             $('.show-url').removeClass('hidden');            
+    //             console.log("removeclass",expandStatus);                
+    //         }
+    //         else {
+    //             $('.show-url').addClass('hidden');
+    //             console.log("addlclass",expandStatus);                
+    //         }
         
             
-        });
+    //     });
         
-    }
+    // }
     //selected mim rating
     function handleMinRatingFilter() {
         $('.container').on('change','#ratingMin', event =>{       
@@ -225,7 +229,7 @@ const bookmarkList = (function(){
 
     function bindEventListeners() {    
         handleNewBookmarkSubmit();    
-        handleExpandButton();    
+        // handleExpandButton();    
         handleDeleteBookmark();
         handleMinRatingFilter();
         handleCloseError();

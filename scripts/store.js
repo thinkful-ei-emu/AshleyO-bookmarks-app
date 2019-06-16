@@ -5,7 +5,7 @@ const store = (function(){
 
     //function that updates error value
     const setError = function(error){
-
+        this.error = error;
     }
 
     //function that addes bookmarks to list
@@ -63,7 +63,8 @@ const store = (function(){
         
         
         toggleAddBookmark,
-        addBookmark,        
+        addBookmark,
+        setError,        
         findById,        
         findAndDelete,
         setfilterRating,

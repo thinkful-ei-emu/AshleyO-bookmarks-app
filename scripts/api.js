@@ -2,7 +2,8 @@
 // eslint-disable-next-line no-unused-vars
 
 const api = (function(){
-    const Base_URL = 'https://thinkful-list-api.herokuapp.com/ashley';
+    
+    const BASE_URL = 'https://thinkful-list-api.herokuapp.com/ashley';
 
 
     const listApiFetch = function(...args) {
@@ -34,19 +35,19 @@ const api = (function(){
     };
 
     const createBookmark = function(newBookmark) {
-        const jsonNewBookmark = JSON.stringify(newBookmark);
-        return listApiFetch(Base_URL + '/bookmarks', {
+        // const jsonNewBookmark = JSON.stringify(newBookmark);
+        return listApiFetch(BASE_URL + '/bookmarks', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: jsonNewBookmark
+            body: newBookmark
         });                    
     };
     
     const updateBookmark = function(id, updateData) {
         const newData = JSON.stringify(updateData);
-        return listApiFetch(Base_URL + '/bookmarks/' + id, {
+        return listApiFetch(BASE_URL + '/bookmarks/' + id, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
@@ -57,7 +58,7 @@ const api = (function(){
 
 
     const deleteBookmark = function(id) {        
-        return listApiFetch(Base_URL + '/bookmarks/' + id, {
+        return listApiFetch(BASE_URL + '/bookmarks/' + id, {
             method: 'DELETE',
             
         });                    
