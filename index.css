@@ -2,16 +2,53 @@
     box-sizing: border-box;}
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto Slab', serif;;
 }
 
 h1 {
+    font-size: 42px;
+    text-align: center;
+}
+
+legend {
     text-align: center;
 }
 
 .container {
     max-width: 600px;
-    margin: 0 auto;   
+    margin: 0 auto;
+    display: grid-inline;
+    /* grid-column-gap: 100px; */
+    grid-row-gap: 100px black;
+       
+}
+
+.container-item {
+    text-align: center;
+
+}
+
+.item-one {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.item-two {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+
+
+.item-three {
+    /* display: inline; */
+    grid-column: 1;
+    grid-row: 3;
+}
+
+.item-four {
+    grid-column: 1;
+    grid-row: 4;
 }
 
 .hidden{
@@ -21,6 +58,10 @@ h1 {
 
 ul {
     list-style: none;
+    
+}
+li {
+    text-align: center;
 }
 
 button, input[type="text"] {
@@ -44,7 +85,7 @@ button:hover {
     background-color: lightblue;  
     font-style: bold;    
     border: solid 3px navy;
-    border-radius: 3px;  
+    border-radius: 10px;  
     margin-bottom: 15px;
     text-align: center;  
   }
@@ -65,8 +106,8 @@ button:hover {
 
 
   section {
-      position: relative;
-      margin-top: 50px;
+      /* position: relative;
+      margin-top: 50px; */
   }
 
   /* .create-bookmark {
@@ -99,9 +140,11 @@ button:hover {
     left: 92%;
   }
 
-  #bookmarkID {
-      display: none;
+  .inline {
+      display: inline;
   }
+
+ 
 
 
 

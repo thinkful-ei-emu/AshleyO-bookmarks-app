@@ -35,10 +35,9 @@ const bookmarkList = (function(){
 
     function generateBookmarkElement(bookmark){
         console.log('generateBookmarkElement ran');    
-        //JUST NEED TO FIGURE OUT TO STYLE THE ID
+        
         const bookmarkRating = generateStars(bookmark);
-        let bookmarkId = bookmark.id;
-        console.log(`updatedRATING: ${bookmarkRating}`);
+        
         return `
         <li class="bookmark-element" data-bookmark-id="${bookmark.id}">    
         <span class="bookmark-element-title">${bookmark.title}</span>    
@@ -46,14 +45,15 @@ const bookmarkList = (function(){
         <div class="star-rating">   
             <span>${bookmarkRating}</span>
         </div>
-        <div id="${bookmarkId}">
+        <div id="${bookmark.id}" class= "hidden">
         <span> ${bookmark.url}</span><br>
         <span> ${bookmark.description}</span>       
         </div>
         
         <div class= "bookmark-buttons">
             <button class="js-bookmark-expand"> 
-                <span class="button-label">Expand</span>
+                <span class="button-label text-${bookmark.id}">Expand</span>
+                <span class="button-label text-${bookmark.id} hidden ">Shrink</span>
             </button>
             <button class="js-bookmark-delete"> 
                 <span class="button-label">Remove</span>
@@ -101,17 +101,11 @@ const bookmarkList = (function(){
             console.log('handleNewBookmarkSubmit ran');          
             let formElement = $('#js-bookmarks-form')[0];      
             let bookmarkForm = serializeJson(formElement);
-             formElement.reset();
-            // const newBookmark = {
-            //     id: cuid(), 
-            //     title: $(`#title`).val(),           
-            //     rating: $(`#ratingScale`).val(),
-            //     url: $(`#url`).val(),
-            //     description: $(`#description`).val(),
-            //     expand: false,                
-            // };
-            console.log(bookmarkForm);
-            api.createBookmark(bookmarkForm)
+            formElement.reset();      
+            
+            
+            if(event.currentTarget && store.adding){                                                                    
+                api.createBookmark(bookmarkForm)
             .then((newbookmark) => {                                                        
                               
                     store.addBookmark(newbookmark); 
@@ -122,37 +116,21 @@ const bookmarkList = (function(){
                 store.setError(err.message);
                 renderError();
               });
-             
-            
-            // if(event.currentTarget && store.adding){
-            //     api.createBookmark(newBookmark)
-            //     .then((bookmark) => {                                                        
-            //             store.toggleAddBookmark();            
-            //             store.addBookmark(bookmark);                                
-            //             $('.create-bookmark').addClass('hidden');
-            //             $('.minRating-container').removeClass('hidden');                        
-            //             render();
-                    
-            //     })
-            //     .catch((err) => {
-            //         store.setError(err.message);
-            //         renderError();
-            //       })
-            //     ;
-
-            // }
-            // else {     
-            //     store.toggleAddBookmark();
-            //     $('.create-bookmark').removeClass('hidden');
-            //     $('.minRating-container').addClass('hidden');   
-            // }
-
-            
+                
+                store.toggleAddBookmark();                                                      
+                $('.create-bookmark').addClass('hidden');
+                $('.minRating-container').removeClass('hidden');                     
+              
+            }
+            else {
+                     
+                store.toggleAddBookmark();
+                $('.create-bookmark').removeClass('hidden');
+                $('.minRating-container').addClass('hidden');   
+            }
             
         });
     }
-
-
 
     //get id of current bookmark
     function getCurrentBookmarkId(currentBookmark) {    
@@ -160,8 +138,6 @@ const bookmarkList = (function(){
         .closest('.bookmark-element')
         .data('bookmark-id'); 
         
-            
-
     }
     //event listener placed on remove button to remove bookmark when clicked
     function handleDeleteBookmark() {
@@ -182,51 +158,30 @@ const bookmarkList = (function(){
         });
     }
 
-    // const toggleExpandStatus = function(bookmark) {
-    //     console.log(`oldBOOKMARK: ${bookmark}`)
-    //     const expandBookmark = bookmark;
-    //     console.log(`newBOOKMARK: ${expandBookmark}`)
-    //     expandBookmark.expand = false;
-    //     if(expandBookmark.expand){
-    //         expandBookmark.expand = false;
-    //         console.log(`toggleStatus: IF: ${expandBookmark.expand}`);
-    //     }
-    //     else {
-    //         expandBookmark.expand = true;
-    //         console.log(`toggleStatus ELSE: ${expandBookmark.expand}`)
-    //     }
-
-    //     return expandBookmark.expand;
-        
-    // }
+   
     //user can click on addbookmark button to input bookmark info and add bookmark to list
     function handleExpandButton (){ 
         $('.js-bookmarks-list').on('click','.js-bookmark-expand', event =>{        
             
+                       
             console.log(event.currentTarget);      
             const id = getCurrentBookmarkId(event.currentTarget);
-            console.log(id);
-            const bookmark = store.findById(id);  
-            console.log(bookmark); 
+            console.log(id);             
+            $(`#${id}`).toggle();
+            $(`.text-${id}`).toggle();
+           
 
-            // const expandStatus = toggleExpandStatus(bookmark);
+
+            // $("button").click(function(){
+            // $(this).text($(this).text() === 'Expand' ? 'Shrink' : 'Expand');
+            // const test = $(this);
+            // console.log(test);
+            // });
+
+           
             
-            
-            $(`#${id}`).toggle('hidden');
-            
-            // if(bookmark) {
-            //     $('.show-url').removeClass('hidden', bookmark);            
-            //     console.log("removeclass"); 
-                            
-            // }
-            // else if() {
-            //     $('.show-url').addClass('hidden', bookmark);
-            //     console.log("addlclass");  
-                              
-            // }
-            
-        
-            
+
+              
         });
         
     }
