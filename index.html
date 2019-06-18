@@ -13,13 +13,14 @@
 </head>
 <body>
     <div class="container">
-        <div class= "error-container container-item"></div>        
+               
         <div class ="container-item item-one">
-                <h1 >My Bookmarks</h1>
+                <h1 >My Bookmarks</h1>        
         </div>
-                    
-            <form id="js-bookmarks-form" name="js-bookmarks-form">
-                <div class="create-bookmark hidden container-item item-two">  <!--hidden -->
+        <div class= "error-container container-item item-six"></div>        
+            <form role="form" id="js-bookmarks-form" name="js-bookmarks-form">
+                <div class="create-bookmark hidden container-item item-two">  
+                    <fieldset class="container-item">
                     <legend>Create Bookmark:</legend>
                     <div class ="container-item item-two a">
                         <span>
@@ -44,16 +45,17 @@
                     <div class="container-item item-two c">
                         <label for="description">Description: </label><br>                             
                         <textarea type="text" id="description" name="description" placeholder="This article is about..." rows="4" cols="50" ></textarea>            
-                    </div>
-
-                </div>  
+                    </div>                    
+                </div>
+                  
                     <div class="container-item item-three d">
                        <button type="submit" id="addBookmark-button">Add Bookmark</button> 
                     </div> 
-                                       
+                </fieldset>                         
             </form>
-            <div class="minRating-container container-item item-three d">            
-                    <label for="ratingMin">Minimum Rating:</label>
+
+            <div class="minRating-container container-item item-four">            
+                    <label class="filterRating" for="ratingMin">Filter By Rating:</label>
                       <select name="ratingtMin" id="ratingMin">                                    
                           <option value= 1>1</option>
                           <option value= 2>2</option>
@@ -61,15 +63,12 @@
                           <option value= 4>4</option>
                           <option value= 5>5</option>
                       </select>
-                  </div> 
-                
+                  </div>              
                 
                 <section>
-                    <ul class="bookmarks-list js-bookmarks-list item-4">
-                                     
-                    </ul>    
-
-                </section>
+                    <ul class="bookmarks-list js-bookmarks-list item-five">                                     
+                    </ul>
+                </section>                
     </div>           
             
     

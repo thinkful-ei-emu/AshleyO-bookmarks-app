@@ -10,22 +10,39 @@ h1 {
     text-align: center;
 }
 
-legend {
-    text-align: center;
+fieldset {
+    border: none;
+    box-shadow: none;
+    margin: auto;
 }
 
-.container {
-    max-width: 600px;
+legend {
+   border: none;
+   font-size: 20px;
+   margin: auto;   
+}
+
+.create-bookmark {
+    border: solid gray 2px;
+    padding: 10px;
+    box-shadow: none;   
+    margin: auto;
+}
+
+.create-bookmark > div {
+    margin: auto;
+    width: 20%;
+}
+
+.container {    
     margin: 0 auto;
-    display: grid-inline;
-    /* grid-column-gap: 100px; */
-    grid-row-gap: 100px black;
-       
+    display: grid;    
+    grid-template-rows: auto auto auto auto auto;   
+    grid-row-gap: 10px;
 }
 
 .container-item {
     text-align: center;
-
 }
 
 .item-one {
@@ -36,12 +53,25 @@ legend {
 .item-two {
     grid-column: 1;
     grid-row: 2;
+    margin: auto;
 }
 
+.item-two.a, .item-two.a, .item-two.c {
+    padding: 5px;
+    
+}
 
+#addBookmark-button {
+    padding: 15px;
+    font-weight: bold;
+    font-size: 20px;
+}
 
-.item-three {
-    /* display: inline; */
+#ratingMin, .filterRating {
+    font-size: 20px;
+}
+
+.item-three {    
     grid-column: 1;
     grid-row: 3;
 }
@@ -49,38 +79,62 @@ legend {
 .item-four {
     grid-column: 1;
     grid-row: 4;
+    font-size: 18px;
+}
+
+.item-three, .item-four {
+    padding: 10px 8px 5px;
+}
+
+.item-five {
+    grid-column: 1;
+    grid-row: 5;
 }
 
 .hidden{
     display: none;
 }
 
-
 ul {
-    list-style: none;
-    
+    list-style: none;            
 }
+
 li {
     text-align: center;
+    width: 75%;
+    margin: 20px auto;
+    padding: 0px 0px;
 }
 
-button, input[type="text"] {
-    padding: 5px;
-  
+button, input[type="text"], textarea[type="text"] {
+    padding: 5px;  
+}
+
+input[type="text"], textarea[type="text"]{
+    color: rgb(70, 67, 67);
+    border: gray solid 1px;
 }
 
 input {
     margin: 3px;
+    padding: 2px;   
+}
+
+input:focus, textarea:focus, select:focus, option:focus{
+    color: rgb(46, 44, 44);
+    outline-color: rgb(101, 101, 211);
+}
+
+#description {
+    padding: 10px 5px;
+    margin-top: 10px;
 }
   
-button:hover {
-
+button:hover, button:focus {
     cursor: pointer;
-
 }
 
 .bookmark-element {
-
     display: block;     
     background-color: lightblue;  
     font-style: bold;    
@@ -104,27 +158,13 @@ button:hover {
       margin: 10px;
   }
 
-
-  section {
-      /* position: relative;
-      margin-top: 50px; */
-  }
-
-  /* .create-bookmark {
-      /* display: flex;
-      flex-direction: row;
-      justify-content: space-evenly; 
-      
-  } 
-
-*/
-
-.error-content {
-    position: fixed;
-    top: 15px;
-    right: 300px;
-    border: 2px solid red;
-    background-color: lightsalmon;
+.error-content {    
+    /* right: 300px; */
+    border: 3px solid rgb(163, 25, 25);
+    background-color: rgb(226, 21, 21);
+    font-weight: bold;
+    color: white;
+    font-size: 20px;       
   }
   
   .error-content p {
@@ -134,15 +174,77 @@ button:hover {
   
   .error-content button {
     font-size: 6pt;
-    background-color: red;
+    background-color: rgb(163, 25, 25);
     color: white;
-    position: relative;
-    left: 92%;
+    position: relative;    
+    left: 45%;
+
   }
 
-  .inline {
-      display: inline;
-  }
+  @media screen and (min-width: 800px) {
+    .container {
+        width: 80%;        
+        margin: 0 autopx;
+        display: grid;        
+        grid-template-rows: auto auto auto auto auto;   
+        grid-row-gap: 10px;
+    }
+    
+    h1 {
+        font-size: 50px;
+    }
+
+    .item-one {
+        grid-column: 1;
+        grid-row: 2;
+    }    
+    .item-two {
+        grid-column: 1;
+        grid-row: 3;
+    }
+    .item-three {    
+        grid-column: 1;
+        grid-row: 4;        
+    }    
+    .item-four {
+        grid-column: 1;
+        grid-row: 5;
+        font-size: 25px;
+    }    
+    .item-five {
+        grid-column: 1;
+        grid-row: 6;
+    }
+    
+    .item-six {
+        grid-column: 1;
+        grid-row: 1;
+        width: 50%;
+        margin: auto;        
+    }
+
+    #addBookmark-button {
+        padding: 15px;
+        font-weight: bold;
+        font-size: 22px;
+    }
+
+    .create-bookmark {
+        width: 80%;
+    } 
+} 
+
+@media screen and (min-width: 1500px) {
+    .create-bookmark {
+        width: 50%;
+    }  
+}
+
+
+  
+
+
+
 
  
 

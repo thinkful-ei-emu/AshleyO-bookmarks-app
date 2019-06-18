@@ -82,9 +82,7 @@ const bookmarkList = (function(){
         const bookmarkListString = generateBookmarksString(bookmarks); 
         $('.js-bookmarks-list').html(bookmarkListString);
         
-    }
-
-    //need to send to post request
+    }    
 
     function serializeJson(form) {    
         const formData = new FormData(form);
@@ -127,8 +125,7 @@ const bookmarkList = (function(){
                 store.toggleAddBookmark();
                 $('.create-bookmark').removeClass('hidden');
                 $('.minRating-container').addClass('hidden');   
-            }
-            
+            }            
         });
     }
 
@@ -136,20 +133,19 @@ const bookmarkList = (function(){
     function getCurrentBookmarkId(currentBookmark) {    
         return $(currentBookmark)
         .closest('.bookmark-element')
-        .data('bookmark-id'); 
-        
+        .data('bookmark-id');       
     }
+
     //event listener placed on remove button to remove bookmark when clicked
     function handleDeleteBookmark() {
         $('.js-bookmarks-list').on('click','.js-bookmark-delete', event =>{        
             const id = getCurrentBookmarkId(event.currentTarget);
             
             api.deleteBookmark(id)
-            .then(() => {                                                        
+            .then(() => {                                                   
                              
                     store.findAndDelete(id); 
-                    render();
-                
+                    render();                
             })
             .catch((err) => {
                 store.setError(err.message);
@@ -161,30 +157,14 @@ const bookmarkList = (function(){
    
     //user can click on addbookmark button to input bookmark info and add bookmark to list
     function handleExpandButton (){ 
-        $('.js-bookmarks-list').on('click','.js-bookmark-expand', event =>{        
-            
-                       
-            console.log(event.currentTarget);      
+        $('.js-bookmarks-list').on('click','.js-bookmark-expand', event =>{                         
             const id = getCurrentBookmarkId(event.currentTarget);
             console.log(id);             
             $(`#${id}`).toggle();
-            $(`.text-${id}`).toggle();
-           
-
-
-            // $("button").click(function(){
-            // $(this).text($(this).text() === 'Expand' ? 'Shrink' : 'Expand');
-            // const test = $(this);
-            // console.log(test);
-            // });
-
-           
-            
-
-              
-        });
-        
+            $(`.text-${id}`).toggle();              
+        });        
     }
+
     //selected mim rating
     function handleMinRatingFilter() {
         $('.container').on('change','#ratingMin', event =>{       
@@ -203,9 +183,6 @@ const bookmarkList = (function(){
         })
     }
 
-
-
-
     function bindEventListeners() {    
         handleNewBookmarkSubmit();    
         handleExpandButton();    
@@ -213,7 +190,6 @@ const bookmarkList = (function(){
         handleMinRatingFilter();
         handleCloseError();
     }
-
 
     return {
         render: render,
