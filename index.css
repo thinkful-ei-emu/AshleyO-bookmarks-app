@@ -181,6 +181,25 @@ button:hover, button:focus {
 
   }
 
+  @media screen and (max-width: 400px){
+    .create-bookmark {
+        max-width: 350px;
+        border: solid gray 2px;
+        padding: 10px;
+        box-shadow: none;   
+        margin: auto;
+        text-align: center;
+    }
+
+    .input {
+      width: 75%;     
+    }
+
+    textarea {
+        width: 80%;
+    }
+  }
+
   @media screen and (min-width: 800px) {
     .container {
         width: 80%;        
